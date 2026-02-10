@@ -3,7 +3,7 @@ from kivy.uix.label import Label
 
 class HelloApp(App):
     def build(self):
-        return Label(text='Hello, world!')
+        return Label(text='Hello, world!', font_size=150)
 
 if __name__ == '__main__':
     HelloApp().run()
