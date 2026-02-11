@@ -33,6 +33,7 @@ class TutorialApp(App):
         b.add_widget(t)
         b.add_widget(f)
 
+        t.bind(text=l.setter('text'))
         return b
 
 if __name__ == "__main__":
