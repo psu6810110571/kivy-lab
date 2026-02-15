@@ -6,8 +6,11 @@
         size_hint_y: None
         height: 200
         text: 'default'
+        # เมื่อมีการพิมพ์ข้อความ (on_text) ให้เรียกฟังก์ชันเปลี่ยนสีใน Python
+        on_text: root.change_label_color()
     FloatLayout:
         Scatter:
             Label:
+                id: my_label  # <--- สำคัญ! ต้องตั้งชื่อ id เพื่อให้ Python หาเจอ
                 text: my_textinput.text
                 font_size: 150
