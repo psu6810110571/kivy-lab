@@ -1,3 +1,5 @@
+#:import random random
+
 <ScatterTextWidget>:
     orientation: 'vertical'
     TextInput:
@@ -6,11 +8,17 @@
         size_hint_y: None
         height: 200
         text: 'default'
-        # เมื่อมีการพิมพ์ข้อความ (on_text) ให้เรียกฟังก์ชันเปลี่ยนสีใน Python
-        on_text: root.change_label_color()
+
+        # --- (จุดที่ต้องแก้เพื่อทดลอง) ---
+        # 1. เปิดใช้อันนี้ (แบบ KV สั่งเอง)
+        on_text: my_label.color = [random.random() for i in range(3)] + [1]
+
+        # 2. ปิดอันนี้ไว้ (แบบ Python เดิม)
+        # on_text: root.change_label_color()
+
     FloatLayout:
         Scatter:
             Label:
-                id: my_label  # <--- สำคัญ! ต้องตั้งชื่อ id เพื่อให้ Python หาเจอ
+                id: my_label
                 text: my_textinput.text
                 font_size: 150
