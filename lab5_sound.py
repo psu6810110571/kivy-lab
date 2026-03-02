@@ -15,10 +15,13 @@ class GameWidget(Widget):
         self.pressed_keys = set()
         Clock.schedule_interval(self.move_step, 0)
         
-        # 🟢 โหลดไฟล์เสียง test.mp3 และสั่งเล่นทันทีเมื่อเปิดเกม
+        # 🟢 โหลดไฟล์เสียง test.mp3 และสั่งเช็คว่าเจอไฟล์ไหม
         self.sound = SoundLoader.load('test.mp3')
         if self.sound:
+            print("🎵 เจอไฟล์เสียงแล้วและพร้อมเล่น!") # เพิ่มบรรทัดนี้
             self.sound.play()
+        else:
+            print("❌ Kivy อ่านไฟล์ test.mp3 ไม่ออกครับ!") # เพิ่มบรรทัดนี้
         
         with self.canvas:
             self.hero = Rectangle(source='hero.png', pos=(0, 0), size=(100, 100))
