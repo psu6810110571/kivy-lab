@@ -4,6 +4,20 @@ from kivy.graphics import Rectangle, Color
 from kivy.core.window import Window
 from kivy.clock import Clock
 
+# --- 🟢 ส่วนที่เพิ่มเข้ามาใน Step 3 (จุดที่ 1): ฟังก์ชันตรวจสอบการชน ---
+# รับพารามิเตอร์ 2 ตัว คือ rect1 (ตัวเรา) และ rect2 (ศัตรู)
+def collides(rect1, rect2):
+    r1x, r1y = rect1[0] # พิกัด X, Y ของตัวเรา
+    r1w, r1h = rect1[1] # ความกว้าง, ความสูง ของตัวเรา
+    r2x, r2y = rect2[0] # พิกัด X, Y ของศัตรู
+    r2w, r2h = rect2[1] # ความกว้าง, ความสูง ของศัตรู
+
+    # สูตรคณิตศาสตร์ เช็คว่าขอบเขตของกล่อง 2 ใบ ล่วงล้ำทับซ้อนกันหรือไม่
+    if (r1x < r2x + r2w and r1x + r1w > r2x and r1y < r2y + r2h and r1y + r1h > r2y):
+        return True # ถ้าทับกัน ส่งค่ากลับเป็น True (ชนแล้ว)
+    return False # ถ้าไม่ทับ ส่งค่ากลับเป็น False (ยังไม่ชน)
+# --- 🟢 สิ้นสุดฟังก์ชันตรวจสอบการชน ---
+
 class GameWidget(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -18,10 +32,8 @@ class GameWidget(Widget):
             # วาดตัวละครของเรา (โคนัน)
             self.hero = Rectangle(source='hero.png', pos=(0, 0), size=(100, 100))
             
-            # --- 🟢 ส่วนที่เพิ่มเข้ามาใน Step 2 ---
-            # เปลี่ยนสีพู่กันเป็นสีแดง (R=1, G=0, B=0, อัลฟ่า=1)
+            # วาดศัตรู (กล่องสีแดง) ไว้ตรงกลางหน้าจอ
             Color(1, 0, 0, 1) 
-            # วาดศัตรู (กล่องสีแดง) ไว้ที่พิกัด x=400, y=300 (กลางหน้าจอ)
             self.enemy = Rectangle(pos=(400, 300), size=(100, 100))
 
     def _on_keyboard_closed(self):
@@ -52,6 +64,16 @@ class GameWidget(Widget):
             cur_x += step
             
         self.hero.pos = (cur_x, cur_y)
+
+        # --- 🟢 ส่วนที่เพิ่มเข้ามาใน Step 3 (จุดที่ 2): เรียกใช้เช็คการชน ---
+        # แพ็คข้อมูล พิกัด (pos) และ ขนาด (size) ของทั้งคู่ ส่งไปให้ฟังก์ชันเช็ค
+        rect1 = (self.hero.pos, self.hero.size)
+        rect2 = (self.enemy.pos, self.enemy.size)
+        
+        # ถ้าฟังก์ชัน collides ส่งค่ากลับมาเป็น True ให้ทำงานใน if นี้
+        if collides(rect1, rect2):
+            print("Colliding! ชนแล้วจ้า!") 
+        # --- 🟢 สิ้นสุดการเรียกใช้เช็คการชน ---
 
 class MyApp(App):
     def build(self):
