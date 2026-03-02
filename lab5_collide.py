@@ -17,6 +17,12 @@ class GameWidget(Widget):
         with self.canvas:
             # วาดตัวละครของเรา (โคนัน)
             self.hero = Rectangle(source='hero.png', pos=(0, 0), size=(100, 100))
+            
+            # --- 🟢 ส่วนที่เพิ่มเข้ามาใน Step 2 ---
+            # เปลี่ยนสีพู่กันเป็นสีแดง (R=1, G=0, B=0, อัลฟ่า=1)
+            Color(1, 0, 0, 1) 
+            # วาดศัตรู (กล่องสีแดง) ไว้ที่พิกัด x=400, y=300 (กลางหน้าจอ)
+            self.enemy = Rectangle(pos=(400, 300), size=(100, 100))
 
     def _on_keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_key_down)
